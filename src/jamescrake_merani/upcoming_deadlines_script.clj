@@ -5,6 +5,22 @@
 
 (def date-format (SimpleDateFormat/new "dd/MM/yyyy"))
 
+;; TODO: This can be configurable later.
+(def interested-modules
+  #{"CM3104"
+    "CM3107"
+    "CM3109"
+    "CM3110"
+    "CM3111"
+    "CM3112"
+    "CM3113"
+    "CM3114"
+    "CM3116"
+    "CM3117"
+    "CM3118"
+    "CM3202"
+    "CM3203"})
+
 (defn interpret-date [date-str]
   (SimpleDateFormat/.parse date-format date-str))
 

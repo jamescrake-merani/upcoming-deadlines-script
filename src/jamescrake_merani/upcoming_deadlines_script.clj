@@ -1,6 +1,12 @@
 (ns jamescrake-merani.upcoming-deadlines-script
   (:require [dk.ative.docjure.spreadsheet :as ss])
+  (:import (java.text SimpleDateFormat))
   (:gen-class))
+
+(def date-format (SimpleDateFormat/new "dd/MM/yyyy"))
+
+(defn interpret-date [date-str]
+  (SimpleDateFormat/.parse date-format date-str))
 
 (defn load-assessment-calendar [filename]
   (->> (ss/load-workbook filename)

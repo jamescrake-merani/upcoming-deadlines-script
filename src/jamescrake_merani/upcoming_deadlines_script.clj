@@ -1,7 +1,8 @@
 (ns jamescrake-merani.upcoming-deadlines-script
   (:require [dk.ative.docjure.spreadsheet :as ss]
             [selmer.parser :as selmer]
-            [clojure.java.io :as io])
+            [clojure.java.io :as io]
+            [babashka.cli :as cli])
   (:import (java.text SimpleDateFormat))
   (:gen-class))
 
@@ -61,4 +62,5 @@
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (println "Placeholder."))
+  (let [opts (cli/parse-opts args cli-spec)]
+    (println "Placeholder")))

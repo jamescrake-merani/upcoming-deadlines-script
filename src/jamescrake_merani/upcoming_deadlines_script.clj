@@ -50,6 +50,11 @@
        (filter #(contains? interested-modules (:module-code %)))
        (combine-assessments)))
 
+(defn generate-assessment-text [filename]
+  (selmer/render-file
+   "template.md"
+   {:modules (load-assessment-calendar filename)}))
+
 (comment
   (selmer/render-file "template.md" {:modules (load-assessment-calendar "/var/home/james/Downloads/Assessment Calendar.xlsx")}))
 

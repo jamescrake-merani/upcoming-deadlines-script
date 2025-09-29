@@ -25,18 +25,17 @@
   (SimpleDateFormat/.parse date-format date-str))
 
 (defn combine-assessments [modules]
-  (into {}
-        (map (fn [group-module]
-               (let [reference-module (first (second group-module))]
-                 {:module-code (first group-module)
-                  :module-name (:module-name reference-module)
-                  :assessments (map (fn [individual-module]
-                                      (dissoc individual-module
-                                              :module-code
-                                              :module-name))
-                                    (second group-module))
-                  }))
-             (group-by #(:module-code %) modules))))
+  (map (fn [group-module]
+         (let [reference-module (first (second group-module))]
+           {:module-code (first group-module)
+            :module-name (:module-name reference-module)
+            :assessments (map (fn [individual-module]
+                                (dissoc individual-module
+                                        :module-code
+                                        :module-name))
+                              (second group-module))
+            }))
+       (group-by #(:module-code %) modules)))
 
 (defn load-assessment-calendar [filename]
   (->> (ss/load-workbook filename)

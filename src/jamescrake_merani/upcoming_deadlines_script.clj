@@ -26,9 +26,9 @@
 
 (defn combine-assessments [modules]
   (into {}
-        (map (fn [group-module]
+        (map (fn [module-code group-module]
                (let [reference-module (first group-module)]
-                 {:module-code (:module-code reference-module)
+                 {:module-code module-code
                   :module-name (:module-name reference-module)
                   :assessments (map (fn [individual-module]
                                       (dissoc individual-module

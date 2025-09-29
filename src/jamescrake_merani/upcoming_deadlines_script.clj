@@ -24,6 +24,19 @@
 (defn interpret-date [date-str]
   (SimpleDateFormat/.parse date-format date-str))
 
+(defn combine-assessments [modules]
+  (into {}
+        (map (fn [group-module]
+               (let [reference-module (first group-module)]
+                 {:module-code (:module-code reference-module)
+                  :module-name (:module-name reference-module)
+                  :assessments (map (fn [individual-module]
+                                      (dissoc individual-module
+                                              :module-code
+                                              :module-name)))
+                  }))))
+  (group-by #(:module-code %) modules))
+
 (defn load-assessment-calendar [filename]
   (->> (ss/load-workbook filename)
        (ss/select-sheet "Sheet1")

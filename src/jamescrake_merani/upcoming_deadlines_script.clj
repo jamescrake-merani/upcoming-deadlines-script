@@ -33,9 +33,10 @@
                   :assessments (map (fn [individual-module]
                                       (dissoc individual-module
                                               :module-code
-                                              :module-name)))
-                  }))))
-  (group-by #(:module-code %) modules))
+                                              :module-name))
+                                    group-module)
+                  }))
+             (group-by #(:module-code %) modules))))
 
 (defn load-assessment-calendar [filename]
   (->> (ss/load-workbook filename)

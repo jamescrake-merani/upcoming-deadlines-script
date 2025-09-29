@@ -1,6 +1,7 @@
 (ns jamescrake-merani.upcoming-deadlines-script
   (:require [dk.ative.docjure.spreadsheet :as ss]
-            [selmer.parser :as selmer])
+            [selmer.parser :as selmer]
+            [clojure.java.io :as io])
   (:import (java.text SimpleDateFormat))
   (:gen-class))
 

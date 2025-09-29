@@ -68,4 +68,4 @@
   "I don't do a whole lot ... yet."
   [& args]
   (let [opts (cli/parse-opts args cli-spec)]
-    (println "Placeholder")))
+    (generate-assessment-text (:spreadsheet opts))))

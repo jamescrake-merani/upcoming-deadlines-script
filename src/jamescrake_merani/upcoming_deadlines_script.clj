@@ -1,10 +1,9 @@
 (ns jamescrake-merani.upcoming-deadlines-script
   (:require [dk.ative.docjure.spreadsheet :as ss]
-            [selmer.parser :as selmer])
+            [selmer.parser :as selmer]
+            [clojure.tools.cli])
   (:import (java.text SimpleDateFormat))
   (:gen-class))
-
-(def date-format (SimpleDateFormat/new "dd/MM/yyyy"))
 
 ;; TODO: This can be configurable later.
 (def interested-modules
@@ -21,9 +20,6 @@
     "CM3118"
     "CM3202"
     "CM3203"})
-
-(defn interpret-date [date-str]
-  (SimpleDateFormat/.parse date-format date-str))
 
 (defn combine-assessments [modules]
   (map (fn [group-module]

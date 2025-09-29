@@ -2,7 +2,7 @@
  :deps {org.clojure/clojure {:mvn/version "1.12.0"}
         selmer/selmer {:mvn/version "1.12.62"}
         dk.ative/docjure {:mvn/version "1.21.0"}
-        org.clojure/tools.cli {:mvn/version "1.2.245"}}
+        org.babashka/cli {:mvn/version "0.8.66"}}
  :aliases
  {:run-m {:main-opts ["-m" "jamescrake-merani.upcoming-deadlines-script"]}
   :run-x {:ns-default jamescrake-merani.upcoming-deadlines-script

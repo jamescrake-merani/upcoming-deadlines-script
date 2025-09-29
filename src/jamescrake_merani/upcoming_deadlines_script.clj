@@ -26,15 +26,15 @@
 
 (defn combine-assessments [modules]
   (into {}
-        (map (fn [module-code group-module]
-               (let [reference-module (first group-module)]
-                 {:module-code module-code
+        (map (fn [group-module]
+               (let [reference-module (first (second group-module))]
+                 {:module-code (first group-module)
                   :module-name (:module-name reference-module)
                   :assessments (map (fn [individual-module]
                                       (dissoc individual-module
                                               :module-code
                                               :module-name))
-                                    group-module)
+                                    (second group-module))
                   }))
              (group-by #(:module-code %) modules))))
 

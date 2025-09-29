@@ -54,7 +54,7 @@
        (combine-assessments)))
 
 (comment
-  (selmer/render-file "template.md" {:modules (load-assessment-calendar "")}))
+  (selmer/render-file "template.md" {:modules (load-assessment-calendar "/var/home/james/Downloads/Assessment Calendar.xlsx")}))
 
 (defn greet
   "Callable entry point to the application."

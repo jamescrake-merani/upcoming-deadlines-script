@@ -1,5 +1,6 @@
 (ns jamescrake-merani.upcoming-deadlines-script
-  (:require [dk.ative.docjure.spreadsheet :as ss])
+  (:require [dk.ative.docjure.spreadsheet :as ss]
+            [selmer.parser :as selmer])
   (:import (java.text SimpleDateFormat))
   (:gen-class))
 
@@ -51,6 +52,9 @@
          :H :feedback-date})
        (filter #(contains? interested-modules (:module-code %)))
        (combine-assessments)))
+
+(comment
+  (selmer/render-file "template.md" {:modules (load-assessment-calendar)}))
 
 (defn greet
   "Callable entry point to the application."

@@ -49,7 +49,8 @@
          :F :hand-out-date
          :G :hand-in-date
          :H :feedback-date})
-       (filter #(contains? interested-modules (:module-code %)))))
+       (filter #(contains? interested-modules (:module-code %)))
+       (combine-assessments)))
 
 (defn greet
   "Callable entry point to the application."

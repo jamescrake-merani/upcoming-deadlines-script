@@ -35,7 +35,8 @@
          :E :percentage
          :F :hand-out-date
          :G :hand-in-date
-         :H :feedback-date})))
+         :H :feedback-date})
+       (filter #(contains? interested-modules (:module-code %)))))
 
 (defn greet
   "Callable entry point to the application."

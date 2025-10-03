@@ -50,6 +50,10 @@
        (filter #(contains? interested-modules (:module-code %)))
        (combine-assessments)))
 
+(defn assessment-is-exam? [assessment]
+  (or (nil? (:hand-in-date assessment))
+      (nil? (:hand-out-date assessment))))
+
 (defn generate-assessment-text [filename]
   (selmer/render-file
    "template.md"

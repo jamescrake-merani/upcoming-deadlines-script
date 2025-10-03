@@ -65,7 +65,6 @@
                   :validate #(.exists (io/file %))}}})
 
 (defn -main
-  "I don't do a whole lot ... yet."
   [& args]
   (let [opts (cli/parse-opts args cli-spec)]
     (println (generate-assessment-text (:spreadsheet opts)))))

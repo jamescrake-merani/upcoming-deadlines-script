@@ -1,6 +1,7 @@
 (ns jamescrake-merani.upcoming-deadlines-script
   (:require [dk.ative.docjure.spreadsheet :as ss]
             [selmer.parser :as selmer]
+            [selmer.filters :as filters]
             [clojure.java.io :as io]
             [babashka.cli :as cli])
   (:import (java.text SimpleDateFormat))
@@ -53,6 +54,7 @@
 (defn assessment-is-exam? [assessment]
   (or (nil? (:hand-in-date assessment))
       (nil? (:hand-out-date assessment))))
+(filters/add-filter! assessment-is-exam?)
 
 (defn generate-assessment-text [filename]
   (selmer/render-file

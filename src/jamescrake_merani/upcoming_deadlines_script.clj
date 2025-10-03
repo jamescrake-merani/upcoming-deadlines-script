@@ -54,7 +54,7 @@
 (defn assessment-is-exam? [assessment]
   (or (nil? (:hand-in-date assessment))
       (nil? (:hand-out-date assessment))))
-(filters/add-filter! assessment-is-exam?)
+(filters/add-filter! :is-exam? assessment-is-exam?)
 
 (defn generate-assessment-text [filename]
   (selmer/render-file

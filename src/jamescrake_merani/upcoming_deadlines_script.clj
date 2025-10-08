@@ -50,7 +50,8 @@
          :G :hand-in-date
          :H :feedback-date})
        (filter #(contains? interested-modules (:module-code %)))
-       (combine-assessments)))
+       (combine-assessments)
+       (group-assessments)))
 
 (defn assessment-handed-out?
   ([assessment] (assessment-handed-out? (t/inst)) )

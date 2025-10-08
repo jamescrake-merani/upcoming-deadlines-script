@@ -52,6 +52,9 @@
        (filter #(contains? interested-modules (:module-code %)))
        (combine-assessments)))
 
+(defn assessment-handed-out? [assessment]
+  (t/>= (t/inst) (:hand-out-date assessment)))
+
 (defn assessment-is-exam? [assessment]
   (or (nil? (:hand-in-date assessment))
       (nil? (:hand-out-date assessment))))

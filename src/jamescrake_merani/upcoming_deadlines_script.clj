@@ -70,9 +70,9 @@
   handed out, and ones which have already been due."
   (let [all-assessments (:assessments module)]
     (assoc :assessments
-           {:not-handed-out (filter assessment-not-handed-out-yet? (:assessments module))
-            :handed-out (filter assessment-handed-out? (:assessments module))
-            :due-in (filter assessment-due-in? (:assessments module))})))
+           {:not-handed-out (filter assessment-not-handed-out-yet? all-assessments)
+            :handed-out (filter assessment-handed-out? all-assessments)
+            :due-in (filter assessment-due-in? all-assessments)})))
 
 (defn assessment-is-exam? [assessment]
   (or (nil? (:hand-in-date assessment))

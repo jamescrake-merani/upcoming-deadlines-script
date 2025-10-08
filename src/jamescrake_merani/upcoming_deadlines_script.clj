@@ -73,7 +73,7 @@
          :H :feedback-date})
        (filter #(contains? interested-modules (:module-code %)))
        (combine-assessments)
-       (group-assessments)))
+       (map group-assessments)))
 
 (defn assessment-is-exam? [assessment]
   (or (nil? (:hand-in-date assessment))

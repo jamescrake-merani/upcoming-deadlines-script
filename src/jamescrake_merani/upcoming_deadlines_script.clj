@@ -71,9 +71,9 @@
   (let [all-assessments (:assessments module)]
     (into
      (dissoc module :assessments)
-     {:not-handed-out (filter assessment-not-handed-out-yet? (:assessments module))
-      :handed-out (filter assessment-handed-out? (:assessments module))
-      :due-in (filter assessment-due-in? (:assessments module))})))
+     {:assessments-not-handed-out (filter assessment-not-handed-out-yet? (:assessments module))
+      :assessments-handed-out (filter assessment-handed-out? (:assessments module))
+      :assessments-due-in (filter assessment-due-in? (:assessments module))})))
 
 (defn assessment-is-exam? [assessment]
   (or (nil? (:hand-in-date assessment))

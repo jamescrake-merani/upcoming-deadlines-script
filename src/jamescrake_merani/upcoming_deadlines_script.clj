@@ -60,6 +60,10 @@
   ([assessment] (assessment-due-in? assessment))
   ([assessment current-time] (t/>= (:hand-in-date assessment) current-time)))
 
+(defn assessment-not-handed-out-yet?
+  ([assessment] (assessment-handed-out? assessment (t/inst)))
+  ([assessment current-time] (not (or (assessment-handed-out? assessment current-time) (assessment-due-in? assessment current-time)))))
+
 (defn assessment-is-exam? [assessment]
   (or (nil? (:hand-in-date assessment))
       (nil? (:hand-out-date assessment))))

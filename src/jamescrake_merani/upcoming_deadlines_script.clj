@@ -37,22 +37,6 @@
             }))
        (group-by #(:module-code %) modules)))
 
-(defn load-assessment-calendar [filename]
-  (->> (ss/load-workbook filename)
-       (ss/select-sheet "Sheet1")
-       (ss/select-columns
-        {:A :module-code
-         :B :module-name
-         :C :assessment-type
-         :D :assessment-name
-         :E :percentage
-         :F :hand-out-date
-         :G :hand-in-date
-         :H :feedback-date})
-       (filter #(contains? interested-modules (:module-code %)))
-       (combine-assessments)
-       (group-assessments)))
-
 (defn assessment-handed-out?
   ([assessment] (assessment-handed-out? (t/inst)) )
   ([assessment current-time] (t/>= current-time (:hand-out-date assessment))))
@@ -73,6 +57,22 @@
            {:not-handed-out (filter assessment-not-handed-out-yet? all-assessments)
             :handed-out (filter assessment-handed-out? all-assessments)
             :due-in (filter assessment-due-in? all-assessments)})))
+
+(defn load-assessment-calendar [filename]
+  (->> (ss/load-workbook filename)
+       (ss/select-sheet "Sheet1")
+       (ss/select-columns
+        {:A :module-code
+         :B :module-name
+         :C :assessment-type
+         :D :assessment-name
+         :E :percentage
+         :F :hand-out-date
+         :G :hand-in-date
+         :H :feedback-date})
+       (filter #(contains? interested-modules (:module-code %)))
+       (combine-assessments)
+       (group-assessments)))
 
 (defn assessment-is-exam? [assessment]
   (or (nil? (:hand-in-date assessment))

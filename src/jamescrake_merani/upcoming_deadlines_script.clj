@@ -64,6 +64,16 @@
   ([assessment] (assessment-handed-out? assessment (t/inst)))
   ([assessment current-time] (not (or (assessment-handed-out? assessment current-time) (assessment-due-in? assessment current-time)))))
 
+(defn group-assessments [module]
+  "Group assessments based on: ones that are yet to be handed out, ones that are
+  handed out, and ones which have already been due."
+  (let [all-assessments (:assessments module)]
+    (into
+     (dissoc module :assessments)
+     {:not-handed-out (filter assessment-not-handed-out-yet? (:assessments module))
+      :handed-out (filter assessment-handed-out? (:assessments module))
+      :due-in (filter assessment-due-in? (:assessments module))})))
+
 (defn assessment-is-exam? [assessment]
   (or (nil? (:hand-in-date assessment))
       (nil? (:hand-out-date assessment))))

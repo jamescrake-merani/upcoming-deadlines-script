@@ -38,26 +38,31 @@
        (group-by #(:module-code %) modules)))
 
 (defn assessment-handed-out?
-  ([assessment] (assessment-handed-out? (t/inst)) )
+  ([assessment] (assessment-handed-out? assessment (t/inst)) )
   ([assessment current-time] (t/>= current-time (:hand-out-date assessment))))
 
 (defn assessment-due-in?
-  ([assessment] (assessment-due-in? assessment))
+  ([assessment] (assessment-due-in? assessment (t/inst)))
   ([assessment current-time] (t/>= (:hand-in-date assessment) current-time)))
 
 (defn assessment-not-handed-out-yet?
   ([assessment] (assessment-handed-out? assessment (t/inst)))
   ([assessment current-time] (not (or (assessment-handed-out? assessment current-time) (assessment-due-in? assessment current-time)))))
 
+(defn assessment-is-exam? [assessment]
+  (or (nil? (:hand-in-date assessment))
+      (nil? (:hand-out-date assessment))))
+(filters/add-filter! :is-exam? assessment-is-exam?)
+
 (defn group-assessments [module]
   "Group assessments based on: ones that are yet to be handed out, ones that are
   handed out, and ones which have already been due."
-  (let [all-assessments (:assessments module)]
+  (let [non-exam-assessments (remove assessment-is-exam? (:assessments module))]
     (assoc module
            :assessments
-           {:not-handed-out (filter assessment-not-handed-out-yet? all-assessments)
-            :handed-out (filter assessment-handed-out? all-assessments)
-            :due-in (filter assessment-due-in? all-assessments)})))
+           {:not-handed-out (filter assessment-not-handed-out-yet? non-exam-assessments)
+            :handed-out (filter assessment-handed-out? non-exam-assessments)
+            :due-in (filter assessment-due-in? non-exam-assessments)})))
 
 (defn load-assessment-calendar [filename]
   (->> (ss/load-workbook filename)
@@ -74,11 +79,6 @@
        (filter #(contains? interested-modules (:module-code %)))
        (combine-assessments)
        (map group-assessments)))
-
-(defn assessment-is-exam? [assessment]
-  (or (nil? (:hand-in-date assessment))
-      (nil? (:hand-out-date assessment))))
-(filters/add-filter! :is-exam? assessment-is-exam?)
 
 (defn generate-assessment-text [filename]
   (selmer/render-file
